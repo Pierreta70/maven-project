@@ -5,7 +5,15 @@ pipeline {
 
 
     stages {
-       
+        
+     stage('clone the repo') {
+            steps {
+               sh '''
+           git clone https://github.com/Pierreta70/maven-project.git
+           
+            '''
+            }
+        }
        
         stage('Compile') {
             steps {
