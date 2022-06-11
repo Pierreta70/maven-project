@@ -86,7 +86,7 @@ environment {
    stage('deploy') {
             steps {
                sh '''
-            sudo docker run -i -p 80:8080 devopseasylearning2021/peter:001 
+            sudo docker run -d -p 82:8080 devopseasylearning2021/peter:001 
             '''
             }
         }
