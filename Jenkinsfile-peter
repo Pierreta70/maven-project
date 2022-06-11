@@ -9,7 +9,8 @@ pipeline {
      stage('clone the repo') {
             steps {
                sh '''
-           git clone https://github.com/Pierreta70/maven-project.git
+          rm -rf https://github.com/Pierreta70/maven-project.git || true
+         git clone https://github.com/Pierreta70/maven-project.git
            
             '''
             }
