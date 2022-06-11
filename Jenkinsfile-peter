@@ -2,34 +2,15 @@ pipeline {
   agent { 
         label 'Node1'
          }
+environment {
+		DOCKERHUB_CREDENTIALS=credentials('Dockerhub')
+	}
 
 
     stages {
         
-    //  stage('clone the repo') {
-    //         steps {
-    //            sh '''
-    //       rm -rf https://github.com/Pierreta70/maven-project.git || true
-    //      git clone https://github.com/Pierreta70/maven-project.git
-           
-    //         '''
-    //         }
-    //     }
-       
-
-        
- 
-
-    // stage('SonarQube analysis') {
-    //   tools {
-    //     sonarQube 'SonarQube Scanner 4.7.0.2747'
-    //   }
-    //   steps {
-    //     withSonarQubeEnv('SonarQube Scanner') {
-    //       sh 'sonar-scanner'
-    //     }
-    //   }
-    // }
+   
+   
              
         stage('Compile') {
             steps {
@@ -75,8 +56,30 @@ pipeline {
             }
         }
     
+   stage('build image') {
+            steps {
+               sh '''
+            docker build -t devopseasylearning2021/peter:001 .
+            '''
+            }
+        } 
     
-    
+  stage('Docker Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+
+   stage('push') {
+            steps {
+               sh '''
+            docker push devopseasylearning2021/peter:001
+            '''
+            }
+        }
+
     }
 
 
